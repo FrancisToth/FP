@@ -11,4 +11,9 @@ object Functor {
     def fmap[B](f: A => B): F[B] = F.fmap(fa)(f)
   }
 
+  object std {
+    implicit def listF: Functor[List] = new Functor[List] {
+      override def fmap[A, B](fa: List[A])(f: A => B): List[B] = fa.map(f)
+    }
+  }
 }
