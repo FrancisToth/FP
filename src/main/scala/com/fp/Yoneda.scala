@@ -84,7 +84,7 @@ object Coyoneda {
   }
 }
 
-object CoyonadaUsage extends App {
+object CoyonedaUsage extends App {
 
   case class Foo[A](a: A)
   val foo = Foo(42)
