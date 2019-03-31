@@ -8,9 +8,10 @@ scalacOptions ++= Seq(
       "-Ypartial-unification",
       "-language:postfixOps",
       "-language:higherKinds",
+      "-language:reflectiveCalls",
       "-deprecation",
       "-encoding", "UTF-8",
-      "-feature",      
+      "-feature", 
       "-unchecked"
     )
 

@@ -1,22 +1,19 @@
 package com.fp
 
 object Monad {
-  def apply[F[_] : Monad]: Monad[F] = implicitly[Monad[F]]
+  def apply[M[_] : Monad]: Monad[M] = implicitly[Monad[M]]
 
-  implicit class MonadOps[A, F[_] : Monad](fa: F[A]) {
-    def flatMap[B](f: A => F[B]): F[B] = Monad[F].flatMap(fa)(f)
+  implicit class MonadOps[A, M[_] : Monad: Functor](ma: M[A]) {
+    def flatMap[B](f: A => M[B]): M[B] = Monad[M].flatMap(ma)(f)
   }
-
 }
 
-trait Monad[F[_]] {
+trait Monad[M[_]] {
 
-  implicit val F: Functor[F]
+  def unit[A](a: A): M[A]
 
-  def unit[A](a: A): F[A]
+  def join[A](fa: M[M[A]]): M[A]
 
-  def join[A](fa: F[F[A]]): F[A]
-
-  def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B] =
-    join(F.fmap(fa)(f))
+  def flatMap[A, B](ma: M[A])(f: A => M[B])(implicit F: Functor[M]): M[B] =
+    join(F.fmap(ma)(f))
 }

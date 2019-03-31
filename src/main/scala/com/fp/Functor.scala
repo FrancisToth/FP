@@ -10,4 +10,5 @@ object Functor {
   implicit class Ops[A, F[_]](fa: F[A])(implicit F: Functor[F]) {
     def fmap[B](f: A => B): F[B] = F.fmap(fa)(f)
   }
+
 }
